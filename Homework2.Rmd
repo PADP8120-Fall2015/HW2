@@ -11,7 +11,7 @@ widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 ---
 
 
-# Homework 1
+# Homework 2
 
 Guidelines: Homeworks should be clear and legible, with answers clearly indicated and work shown. Homeworks will be given a minus, check, or check plus owing to completion and correctness. You are welcome to work with others but please submit your own work. Your homework must be produced in an R Markdown (.rmd) file submitted via github. If you are having trouble accomplishing this, please refer to the [guide](http://spia.uga.edu/faculty_pages/tyler.scott/teaching/PADP8120_Fall2015/Homeworks/submitting_homework.shtml). This homework adapts materials from the work of Michael Lynch (http://spia.uga.edu/faculty_pages/mlynch/), Tyler McCormick (http://www.stat.washington.edu/~tylermc/), and Open Intro (https://www.openintro.org/stat/textbook.php)
 
