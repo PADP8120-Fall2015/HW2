@@ -105,7 +105,7 @@ We know that 35% of students signed up for art, and 40% for chess, but we don't 
 
 5. Records show that 442 students recently entered a Florida public school district. Of those 442, 84 have not received their vaccinations. The district’s physician is scheduled to go from school to school next Tuesday to give shots to those who need them. If we know that about 8% of students are absent on any given day, how many unvaccinated students are likely to miss the doctor visit?
 
-The trick here is that the probability of being absent is unconditional on the probability of being unvaccinated (at least in this problem). That is, p(absent) = p(absent|unvaccinated). Thus, we can find the number of students likely to miss the doctor visit my multiplying the number of unvaccinated students by the probabilty of being absent: 0.08 * 84 = `r 0.08 * 84`
+The trick here is that the probability of being absent is unconditional on the probability of being unvaccinated (at least in this problem). That is, p(absent) = p(absent|unvaccinated). Thus, we can find the number of students likely to miss the doctor visit my multiplying the number of unvaccinated students by the probability of being absent: 0.08 * 84 = `r 0.08 * 84`
 
 
 6. For questions 1a - 1c, assume a variable is normally distributed with a mean of 180 and a standard deviation of 25. Please show all work (i.e., relevant code - hint: the `pnorm`/`qnorm`/`dnorm` family will be your friend here)
@@ -129,10 +129,10 @@ The probabilty that a random draw from N(180,25^2) will be less than 182 is p(Y 
 c. What is the probability that a single draw from this distribution, labeled Z, will be between 160 and 192?
 
 ```{r}
-pnorm(160,180,25,lower.tail=TRUE) + pnorm(192,180,25,lower.tail=FALSE)
+1- pnorm(160,180,25,lower.tail=TRUE) - pnorm(192,180,25,lower.tail=FALSE)
 ```
 
-The probabilty that a random draw from N(180,25^2) will be less than 192 and greater than 160 is p(160 < Z < 192) = `r pnorm(160,180,25,lower.tail=TRUE) + pnorm(192,180,25,lower.tail=FALSE)` (Remember to set your tails correctly so you find 1 - area_left_of_160 - area_right_of_192)
+The probabilty that a random draw from N(180,25^2) will be less than 192 and greater than 160 is p(160 < Z < 192) = `r 1-pnorm(160,180,25,lower.tail=TRUE) - pnorm(192,180,25,lower.tail=FALSE)` (Remember to set your tails correctly so you find 1 - area_left_of_160 - area_right_of_192)
 
 
 7. The random variable x has the discrete probability distribution shown here:
@@ -208,36 +208,16 @@ hist(replicate(500,mean(sample(cflip,500,replace=T))),main='500d, 500s',xlab='')
 As shown, what makes the largest difference is the number of samples taken. Even when we take 500 draws, but only 20 samples, the sample distribution is not very normally distributed. However, the plots comparing 500 samples of 20 draws vs. 500 samples of 500 draws are actually fairly similar to one another in shape; nonetheless, there is clearly a significant distinction in terms of spread. The 500 draw, 500 sample histogram is not only approximately normal but is closely centered on the true mean, whereas the histogram for the 20 draw, 500 sample experiment has a much wider spread.  
 
 
-10. Consider a population of donuts with with an average survival time until becoming stale of $\mu = 3$ days and a standard deviation of failure times $\sigma = 0.25$ days (exponential distribution). If you take a sample of 24 donuts, what are the chances the mean failure time of your sample will be:
+10. Consider a population of donuts with with an average survival time until becoming stale of $\mu = 3$ days and a standard devation of $\sigma = 0.25$ If you take a sample of 24 donuts, what are the chances the mean failure time of your sample will be (use a t-distribution):
+
+SKIP THIS PROBLEM
 
 (a) Greater than 3 days? 
 
-To compute this, use the helpfile (`?pexp`, or any other in the `rexp`/`dexp`/`qexp` family), which will show you that the rate parameter is given by $mean = 1/rate$. Thus, since $\mu = 3$, we should set the rate equal to $1/3$. To prove this, I'll quickly simulate 10,000 draws form this distribution; the mean of the draws should be about equal to 3:
-
-```{r}
-mean(rexp(10000,1/3))
-```
-
-Anyways, we can use `pexp` to calculate the probablity that the mean failure time given a 24-donut sample will be greater than 3:
-
-```{r}
-pexp(3,rate = 1/3,lower.tail=FALSE)
-```
-
-Note that this distribution is NOT a function of sample size, so this does not actually factor in.
-
 (b) Less than 1.5 days?
-
-```{r}
-pexp(1.5,rate = 1/3,lower.tail=TRUE)
-```
-
 
 (c) Between 2.25 and 3.75 days?
 
-```{r}
-1 - pexp(2.25,rate = 1/3,lower.tail=TRUE) -  pexp(3.75,rate = 1/3,lower.tail=FALSE)
-```
 
 11. (also problem 4.17/4.18 in Open Intro 3) Identify hypotheses, for each item, write the null and alternative hypotheses in words and then symbols for each of the following situations.
 
