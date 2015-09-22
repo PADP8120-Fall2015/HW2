@@ -148,7 +148,7 @@ The probability that X is less than or equal to 0 is $P(x<=0)$ = 0.15+0.15+0.35 
 
 b. Find $P(x>-1)$
 
-The probabilty that X is greater than or equal to -1 is $P(x>=-1)$ = 0.15+0.35+0.25+.10 = `r 0.15+0.35+0.25+0.10`. 
+The probabilty that X is greater than or equal to -1 is $P(x>-1)$ = 0.35+0.25+.10 = `r 0.35+0.25+0.10`. 
 
 c. Find $P(-1<=x<=1)$
 
