@@ -87,53 +87,83 @@ round(0.64 * 0.87 + 0.36 * 0.68,2)
 
 #### c. What is the probability that a randomly chosen entrant either is a repeat racer or will eventually finish (or both)?
 
-To calculate this, we need to find the union of being a repeat racer and being a finisher ($p(Repeat \cup Finisher)$). Remember that we can't double-count repeat racers who finish, so we need to add the probability of being a repeater to the probability of being a finisher and then subtract the probability of being a repeat finisher: p(Repeat) + p(Finish) - p(Finish + Repeat) = 0.64 + 0.80 - 0.56 = 0.88.
+```{r}
+#p(Repeat) + p(Finish) - p(Finish + Repeat)
+sum(0.64 + 0.80 - 0.56)
+```
+
+Probability is .88
 
 ###4. A school received a grant to offer two extracurricular clubs, art and chess. Of the students 35% signed up for art club and 40% for chess club. Of those signing up for art club 20% signed up for chess club.
 
 #### a. What is the probability that a randomly selected student signed up for both clubs?
 
-We know that 35% of students signed up for art, and 20% of those students signed up for chess club. So, we know that 0.35 * .20 = `r 0.35 * .20` students signed up for both.
+```{r}
+#% of Students signed up for art x % of students signed up for Chess Club
+.35*.20
+```
+
+.07 Students signed up for both.
 
 #### b. What is the probability that a randomly selected student who signed up for chess club also signed up for art club?
 
-We know that there are `r 0.35 * .20` art club students who also joined the chess team. Thus, if 40% of all students are in the chess club and we know that `r 0.35 * .20` are in both this means that `r 0.40 - 0.35 * .20` are ONLY in the chess club. Essentially, this means that 7 out of every 40 chess club memers are also in the art club. We can divide 7/40 = `r 7/40` to get the probability of a chess club member being in art as well. 
+```{r}
+#% Signed up for Chess Club
+#40%
+
+#Probability that a randomly selected student signed up for both
+.35*.20
+
+#If we know that 7% probability that signed up for both and we know that 40% of students are signed up for chess club, so probability of chess club member being in art as well
+7/40
+```
 
 #### c. What is the probability that a randomly chosen student signed up for at least one of these two clubs? 
 
-We know that 35% of students signed up for art, and 40% for chess, but we don't want to double count the `r 100 * 0.35 * .20`% of students who signed up for both. Thus, we add 0.35 + 0.40 - `r 0.35 * .20` = `r 0.35 + 0.40 - 0.35 * .20` to get the probability that a randomly chosen student signed up for at least one club. 
+We can work this out logically as well as mathematically. 35% of students signed up for art, 40% signed up for chess. 7% signed up for both. We add and subtract appropriately to get the following formula:
+
+```{r}
+#% signed up for art + % signed up for chess - % signed up for both
+0.35 + 0.40 - 0.07
+```
+
+Probability is .68
 
 ###5. Records show that 442 students recently entered a Florida public school district. Of those 442, 84 have not received their vaccinations. The district’s physician is scheduled to go from school to school next Tuesday to give shots to those who need them. If we know that about 8% of students are absent on any given day, how many unvaccinated students are likely to miss the doctor visit?
 
-The trick here is that the probability of being absent is unconditional on the probability of being unvaccinated (at least in this problem). That is, p(absent) = p(absent|unvaccinated). Thus, we can find the number of students likely to miss the doctor visit my multiplying the number of unvaccinated students by the probability of being absent: 0.08 * 84 = `r 0.08 * 84`
+```{r}
+#The two probabilities in this scenario are unconditional. We solve for the probability of being absent by the # of unvaccinated students.
+0.08 * 84
+```
 
+The result is 6.72 students.
 
 ###6. For questions 1a - 1c, assume a variable is normally distributed with a mean of 180 and a standard deviation of 25. Please show all work (i.e., relevant code - hint: the `pnorm`/`qnorm`/`dnorm` family will be your friend here)
 
 #### a. What is the probability that a single draw from this distribution, labeled X, will be greater than 210?
 
 ```{r}
+#Formula will be pnorm(greater than value, mean, standard deviation)
+#We are looking for greater than, so we lower tail = false
 pnorm(210,180,25,lower.tail=FALSE)
 ```
 
-The probabilty that a random draw from N(180,25^2) will be greater than 210 is p(X > 210) = `r pnorm(210,180,25,lower.tail=FALSE)`. 
+Probability is .1150697
 
 #### b. What is the probability that a single draw from this distribution, labeled Y, will be less than 182?
 
 ```{r}
+#Formula will be pnorm(less than value, mean, standard deviation)
+#We are looking for greater than, so we lower tail = true
 pnorm(182,180,25,lower.tail=TRUE)
 ```
-
-The probabilty that a random draw from N(180,25^2) will be less than 182 is p(Y < 182) = `r pnorm(182,180,25,lower.tail=TRUE)`. 
 
 #### c. What is the probability that a single draw from this distribution, labeled Z, will be between 160 and 192?
 
 ```{r}
+#We use the same type of formulas or above, then subtract them from one and then each other.
 1- pnorm(160,180,25,lower.tail=TRUE) - pnorm(192,180,25,lower.tail=FALSE)
 ```
-
-The probabilty that a random draw from N(180,25^2) will be less than 192 and greater than 160 is p(160 < Z < 192) = `r 1-pnorm(160,180,25,lower.tail=TRUE) - pnorm(192,180,25,lower.tail=FALSE)` (Remember to set your tails correctly so you find 1 - area_left_of_160 - area_right_of_192)
-
 
 ###7. The random variable x has the discrete probability distribution shown here:
 
@@ -144,29 +174,52 @@ The probabilty that a random draw from N(180,25^2) will be less than 192 and gre
 
 #### a. Find $P(x<=0)$
 
-The probability that X is less than or equal to 0 is $P(x<=0)$ = 0.15+0.15+0.35 = `r 0.15+0.15+0.35`. 
+```{r}
+#To calculate the probability that x is less than or equal to 0, we add the probabilities from the table that are associated with all negative and 0 values.
+
+0.15+0.15+0.35
+```
 
 #### b. Find $P(x>-1)$
 
-The probabilty that X is greater than or equal to -1 is $P(x>-1)$ = 0.35+0.25+.10 = `r 0.35+0.25+0.10`. 
+```{r}
+#To calculate the probability that x is greater than or equal to -1, we add the probabilities from the table that are above -1.
+
+0.35+0.25+0.10
+```
 
 #### c. Find $P(-1<=x<=1)$
 
-The probability that X is greater than or equal to -1 and less than or equal to 1 is: $P(-1<=x<=1)$ = 0.15 + 0.35 + 0.25 = `r 0.15 + 0.35 + 0.25`. 
+```{r}
+#To calculate the probability that x is greater than or equal to -1 AND less than or equal to 1, we add the probabilities above and below those limits that are present in the table above:
+
+0.15 + 0.35 + 0.25
+```
 
 #### d. Find $P(x<2)$
 
-The probability that X is less than 2 is $P(x<2)$ = 1 - 0.10 = `r 1-0.10`. 
+```{r}
+#To calculate the probability that x is less than 2, we take a certain probability (100% or 1) and subtract the probability of 2 from the table above:
+
+1-0.10
+```
 
 #### e. Find $P(-1<x<2)$
 
-The probability that X is greater than -1 and less than 2 is: $P(-1<x<2)$ = 0.35 + 0.25 = `r 0.25 + 0.35`.
+```{r}
+#To calculate the probability that x is greater than -1 and less than 2, we add the probability associated with 0 and 1 on the table above:
+
+0.25 + 0.35
+```
+
 
 ###9. Consider flipping an unequally weighted coin with probability of success $.55$. Say that $X$ is the random variable associated with this coin and that $X=1$ if heads (success), 0 otherwise. Simulate 20 coin flips and store them as a variable called “cflip.” In R, do this with `cflip=rbinom(20,1,.55)`. Use `?rbinom` to make sure you understand what each part of the command stands for.
 
 ```{r}
 cflip=rbinom(20,1,.55)
 ```
+
+Note to self: we use rbinom because the coin flip has a binomial distribution
 
 #### a. Take 20 samples with replacement from cflip and compute the mean of the sample. In R: `cflipsamp=sample(cflip,20,replace=T)`
 
@@ -178,62 +231,87 @@ cflipsamp=sample(cflip,20,replace=T)
 `resamp.mean=rep(NA,500) for(i in 1:500){ resamp.mean[i]<-mean(sample(cflip,20,replace=T))}`. 
 
 ```{r}
-cflip.samp.500 <- replicate(500,mean(sample(cflip,20,replace=T)))
+cflip500samp = replicate(500,mean(sample(cflip,20,replace=T)))
 ```
 
 #### c. Plot a histogram of the re-sampled means. Does it look like what we know from normal theory that the sampling distribution of the mean should look like in this case?
 
 ```{r}
-hist(cflip.samp.500)
+hist(cflip500samp)
 ```
 
 Yes, this is about what we would expect.The true probability is 0.55, and it looks like the distribution is approximately normally distributed around this value. 
 
 #### d. Experiment with increasing/decreasing the number of original samples (draws within one "sample") and the number of re-samples (number of times you repeat the sampling process). Pay attention to the impact changing either has on the resulting distribution of sample means, and provide some form of visual demonstration (table and/or figure) to show how sample size changes your results. 
+Here are four experiments
 
-I am going to run four different experiments: (1) 20 draws, repeated 20 times; (2) 20 draws, repeated 500 times; (3) 500 draws, repeated 20 times; and (4) 500 draws, repeated 500 times:
-
+Experiment 1:
 ```{r}
-par(mfrow=c(2,2))
-hist(replicate(20,mean(sample(cflip,20,replace=T))),main='20d, 20s',xlab='')
-hist(replicate(500,mean(sample(cflip,20,replace=T))),main='20d, 500s',xlab='')
-hist(replicate(20,mean(sample(cflip,500,replace=T))),main='500d, 20s',xlab='')
-hist(replicate(500,mean(sample(cflip,500,replace=T))),main='500d, 500s',xlab='')
+#Create a histogram of 50 draws, done 50 times (samples)
+hist(replicate(50,mean(sample(cflip,50,replace=T))),main='25 Draws, 25 Times',xlab='')
 ```
 
-As shown, what makes the largest difference is the number of samples taken. Even when we take 500 draws, but only 20 samples, the sample distribution is not very normally distributed. However, the plots comparing 500 samples of 20 draws vs. 500 samples of 500 draws are actually fairly similar to one another in shape; nonetheless, there is clearly a significant distinction in terms of spread. The 500 draw, 500 sample histogram is not only approximately normal but is closely centered on the true mean, whereas the histogram for the 20 draw, 500 sample experiment has a much wider spread.  
+Experiment 2:
+```{r}
+#Create a histogram of 50 draws, done 500 times (samples)
+hist(replicate(500,mean(sample(cflip,50,replace=T))),main='50 Draws, 500 Times',xlab='')
+```
 
+Experiment 3:
+```{r}
+#Create a histogram of 500 draws, done 50 times (samples)
+hist(replicate(50,mean(sample(cflip,500,replace=T))),main='500 Draws, 50 Times',xlab='')
+```
+
+Experiment 4:
+
+```{r}
+#Create a histogram of 500 draws, done 500 times (samples)
+hist(replicate(500,mean(sample(cflip,500,replace=T))),main='500 Draws, 500 Times',xlab='')
+```
+
+####From these four experiments, we can make the following observations:
+1. Experiment 3 shows a distribution that is not normal. 
+2. Experiment 2 and Experiment 4 produce similar histograms
+3. Experiment 2 produces a wider distribution
+4. Increasing the number of draws alone (as was done in Experiment 3) is therefore not sufficient.
+5. Experiment 4 produces a normal distribution that is best clustered around the mean.
+6. We can see that # of samples makes a more critical change than the # of draws.
 
 ###11. (also problem 4.17/4.18 in Open Intro 3) Identify hypotheses, for each item, write the null and alternative hypotheses in words and then symbols for each of the following situations.
 
 #### a. New York is known as \the city that never sleeps". A random sample of 25 New Yorkers were asked how much sleep they get per night. Do these data provide convincing evidence that New Yorkers on average sleep less than 8 hours a night?
 
-Null: New Yorkers sleep 8 hours a night on average
-Alternative: New Yorkers sleep less than 8 years a night on average. 
+**Null Hypothesis:** New Yorkers sleep 8 hours on an average night
+
+**Alternative Hypothesis** New Yorkers sleep less than 8 hours on an average night 
 
 $$H_0: \mu = 8$$
 $$H_A: \mu < 8$$
 
 #### b. Employers at a firm are worried about the effect of March Madness, a basketball championship held each spring in the US, on employee productivity. They estimate that on a regular business day employees spend on average 15 minutes of company time checking personal email, making personal phone calls, etc. They also collect data on how much company time employees spend on such non-business activities during March Madness. They want to determine if these data provide convincing evidence that employee productivity decreases during March Madness.
 
-Null: Employees waste 15 minutes of time per day in March
-Alternative: Employees waste more than 15 minutes of time per day in March
+**Null Hypothesis:** During March Madness, employees spend 15 minutes per day on non-work activities.
+
+**Alternative Hypothesis** During March Madness, employees spend more than 15 minutes per day on non-work activities.
 
 $$H_0: \mu = 15$$
 $$H_A: \mu > 15$$
 
-#### c. Since 2008, chain restaurants in California have been required to display calorie counts ofeach menu item. Prior to menus displaying calorie counts, the average calorie intake of dinersat a restaurant was 1100 calories. After calorie counts started to be displayed on menus, a nutritionist collected data on the number of calories consumed at this restaurant from a random sample of diners. Do these data provide convincing evidence of a difference in the average calorie intake of a diners at this restaurant?
+#### c. Since 2008, chain restaurants in California have been required to display calorie counts of each menu item. Prior to menus displaying calorie counts, the average calorie intake of dinersat a restaurant was 1100 calories. After calorie counts started to be displayed on menus, a nutritionist collected data on the number of calories consumed at this restaurant from a random sample of diners. Do these data provide convincing evidence of a difference in the average calorie intake of a diners at this restaurant?
 
-Null: Calorie consumption after the new requirement is the same as before
-Alternative: Calorie consumption after the new requirement is different than before. 
+**Null Hypothesis:** Number of calories consumed by diners after menus with calories were introduced is the same as before
+
+**Alternative Hypothesis** Number of calories consumed by diners after menus with calories were introduced is different than before.
 
 $$H_0: \mu = 1100$$
 $$H_A: \mu != 1100$$
 
 #### d. Based on the performance of those who took the GRE exam between July 1, 2004 and June 30, 2007, the average Verbal Reasoning score was calculated to be 462. In 2011 the average verbal score was slightly higher. Do these data provide convincing evidence that the average GRE Verbal Reasoning score has changed since 2004?
 
-Null: The average GRE verbal reasoning score has not changed since 2004. 
-Alternative: The average GRE verbal reasoning score has changed since 2004. 
+**Null Hypothesis:** Average performance on GRE Verbal Reasoning is the same as 2004.
+
+**Alternative Hypothesis** Average performance on GRE Verbal Reasoning is different than 2004.
 
 $$H_0: \mu = 462$$
 $$H_A: \mu != 462$$
@@ -242,28 +320,46 @@ $$H_A: \mu != 462$$
 
 #### a. Write the hypotheses in words.
 
-Null: The restuarant is not in gross violation
-Alternative: The restaurant is in gross violation
+**Null Hypothesis:** Restaurant is meeting sanitation regulations
+
+**Alternative Hypothesis** Restaurant is not meeting sanitation regulations
 
 #### b. What is a Type 1 Error in this context?
 
-Concluding that the restaurant is in gross violation when it is not.
+If conclude that the restaurant is not meeting sanitation regulations when it actually is.
 
 #### c. What is a Type 2 Error in this context?
 
-Failing to shut down the restaurant when it is in fact in gross violation.
+If we conclude the resturant is meeting sanitation regulations when it is not actually meeting them.
 
 #### d. Which error is more problematic for the restaurant owner? Why?
 
-For the restaurant owner, Type I error is most problematic, since it means that he will be shut down when he in fact should not be. 
+**Type 1 Error** The restaurant owner would be more concerned about being shut down when he actually is meeting regulations. This would be Type 1 error.
 
 #### e. Which error is more problematic for the diners? Why?'
 
-For diners, Type II error is more problematic, since it means they could be exposed to an unsafe restaurant that should be shut down. 
+**Type 2 Error** For diners (or the regulation board), the more problematic event would be failing to shut down the restaurant if it is not meeting sanitation regulations.
 
 ### Report your process
 
-You're encouraged to reflect on what was hard/easy, problems you solved, helpful tutorials you read, etc. Give credit to your sources, whether it's a blog post, a fellow student, an online tutorial, etc.
+This week's effort was more challenging than last week's, which led to a few days of extra work after my original posting goal of Wednesday. 
+
+####Here is how I approached this week's assignment:
+1. I created a new markdown file
+2. I integrated the Homework Key
+3. I worked backwords, using the ? command to understand each decision step by step. 
+4. Where relevant, I used different numbers (such as in the experiments) or grammar to ensure that my work was original.
+5. I repeated steps 3 and 4 throughout to ensure that I would be able to do this work on my own
+6. In a few places (again such as the experiments) I chose to display work differently. For example, I did not use the par command, which would have displayed all four experiments in a single four-part display. I prefered to see each histogram seperately.
+7. I consulted http://rmarkdown.rstudio.com/ to determine how to format this file according to my preferences. Last week, I used this to learn heading changes. This week, I learned how to create lists and to bold parts of texts.
+
+####Things I want to change in the next homework:
+1. I want to rely on the key to a smaller degree
+2. I feel I will be more confident in my markdown formatting, but would like to learn to use bullets. The suggestions on how to use those on rmarkdown.rstudio.com didn't seem to work and I would like to troubleshoot the problem
+3. One critical mistake I made: I didn't commit at all throughout the process! Failing to do so means that I cannot track my progress, nor would I have been able to revert to an earlier version if I had made a critical mistake.
+
+**All in all, this was a fun and challenging homework assignment. I look forward to the next one!**
+
 
 
 ### Rubric
